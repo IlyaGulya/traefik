@@ -614,7 +614,7 @@ func TestConfigureDNSChallengeUsingEnvironmentOverrides(t *testing.T) {
 		Environment: testEnvironment,
 	}
 
-	provider, err := testChallenge.NewDnsChallengeProvider()
+	provider, err := testChallenge.newDnsChallengeProvider()
 
 	assert.Nil(t, err, "DNSChallenge provider should be created without error")
 
@@ -656,7 +656,7 @@ func TestDNSChallengeConfigurationCorrectlyRestoresEnvironmentVariables(t *testi
 		Environment: testEnvironment,
 	}
 
-	_, err := testChallenge.NewDnsChallengeProvider()
+	_, err := testChallenge.newDnsChallengeProvider()
 
 	assert.Nil(t, err, "DNSChallenge provider should be created without error")
 

@@ -269,7 +269,7 @@ func (p *Provider) getClient() (*lego.Client, error) {
 
 		var provider challenge.Provider
 
-		provider, err = p.DNSChallenge.NewDnsChallengeProvider()
+		provider, err = p.DNSChallenge.newDnsChallengeProvider()
 
 		if err != nil {
 			return nil, err
@@ -317,16 +317,16 @@ func (p *Provider) getClient() (*lego.Client, error) {
 	return p.client, nil
 }
 
-func (c *DNSChallenge) NewDnsChallengeProvider() (challenge.Provider, error) {
-	backup := c.BackupEnvironmentOverride()
+func (c *DNSChallenge) newDnsChallengeProvider() (challenge.Provider, error) {
+	backup := c.backupEnvironmentOverride()
 
-	SetEnvironmentVariables(c.Environment)
-	defer SetEnvironmentVariables(backup)
+	setEnvironmentVariables(c.Environment)
+	defer setEnvironmentVariables(backup)
 
 	return dns.NewDNSChallengeProviderByName(c.Provider)
 }
 
-func (c *DNSChallenge) BackupEnvironmentOverride() map[string]string {
+func (c *DNSChallenge) backupEnvironmentOverride() map[string]string {
 	m := make(map[string]string)
 
 	for key, _ := range c.Environment {
@@ -335,7 +335,7 @@ func (c *DNSChallenge) BackupEnvironmentOverride() map[string]string {
 	return m
 }
 
-func SetEnvironmentVariables(environment map[string]string) {
+func setEnvironmentVariables(environment map[string]string) {
 	for key, value := range environment {
 		os.Setenv(key, value)
 	}
